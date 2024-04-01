@@ -1,6 +1,8 @@
 <?php namespace Cviebrock\LaravelElasticsearch;
 
 use Elasticsearch\ClientBuilder;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class Factory {
 
@@ -46,7 +48,8 @@ class Factory {
 			} else {
 				$path = $config['logPath'];
 				$level = $config['logLevel'];
-				$logger = ClientBuilder::defaultLogger($path, $level);
+				$handler = new StreamHandler($logPath, $logLevel);
+                $logObject = new Logger('log');
 				$clientBuilder->setLogger($logger);
 			}
 		}
